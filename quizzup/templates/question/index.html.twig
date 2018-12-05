@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+<div class="container">
+  <h1>Binvenue a QUIZZUP!</h1>
+
+  <a class="btn btn-primary" href="{{path('question_add')}}">Ajouter une question</a>
+
+  <div class="">
+    {# filtres #}
+    <form>
+      <select class="" name="category">
+        {% for cat in categories %}
+        <option value="{{cat.id}}">{{cat.name}}</option>
+        {% endfor %}
+      </select>
+      <select class="" name="difficulty">
+        {% for key in difficulty|keys %}
+        <option value="{{difficulty[key]}}">{{key}}</option>
+        {% endfor %}
+      </select>
+      <button>filter</button>
+    </form>
+    {% for question in questions %}
+    <h3>{{question.label}}</h3>
+    <a class="btn btn-sm btn-success"href="{{path('answer')}}">Voir la réponse</a>
+    <p>{{question.category.name}}</p>
+    <a class="btn btn-danger btn-sm"href="{{path('question_delete',{'id':question.id})}}">Supprimer</a>
+    <td><a href="{{path('question_edit', {'id': question.id})}}"class="btn btn-sm btn-warning">Editer</a></td>
+    <p><strong>Réponses associées:{{question.answers | length}}</strong></p>
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}

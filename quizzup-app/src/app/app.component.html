@@ -1,0 +1,64 @@
+<div class="container">
+
+
+<h1>{{title}}</h1>
+<div [ngStyle]="{'display':appear}">
+  <select [(ngModel)]="category">
+    <option value="0">Choisir une catégorie</option>
+    <option [value]="cat.id" *ngFor="let cat of categories">{{cat.name}}</option>
+  </select>
+
+
+
+  <select [(ngModel)]="difficulty">
+    <option value="0">Choix du niveau</option>
+    <option value="1">Facile</option>
+    <option value="2">Intémédiaire</option>
+    <option value="3">Difficile</option>
+    <option value="4">Pro</option>
+
+  </select>
+  <button (click)="runQuizzup()" >Démarrer Quizzup</button>
+</div>
+<span
+class="text-danger"
+*ngIf="noResult">Aucune question correspondant correspondant aux critères</span>
+
+<!--template de la question-->
+<div *ngIf="isQuizzupRunning">
+  <div>Question : {{questionIndex +1}} / {{questions.length}}
+  <div>Score: {{score}}/{{questions.length}} ({{score/questions.length *100}}% de reussite)</div>
+  </div>
+  <div>
+    <h2>{{questions[questionIndex].label}}</h2>
+    <section class="feedback" [ngStyle]="{'color':feedbackColor}">
+        <span>{{feedback}}</span>
+        <span   *ngIf="isServerResponseReceived && questionIndex == (questions.length -1)">C'était la dernière question, snif,snif...</span>
+    </section>
+
+  </div>
+  <div>
+    <div *ngFor=" let answer of questions[questionIndex].answers">
+  <input
+  [disabled]="isClientChoiceSent"
+   (click)="checkAnswer(questions[questionIndex].id,answer.id)"
+   type="checkbox">
+   <span [ngClass]="{'correct':isCorrect(answer.id)}">{{answer.label}}</span>
+
+    </div>
+  </div>
+  <footer>
+    <button
+    *ngIf= "!isServerResponseReceived"
+    [disabled]="clientChoice.answers.length === 0 || isClientChoiceSent"(click)="validQuestion()">Valider</button>
+    <button
+     (click)="nextQuestion()"
+    *ngIf="isServerResponseReceived && questionIndex !== (questions.length -1)">Question suivante</button>
+    <button
+    *ngIf="isServerResponseReceived && questionIndex == (questions.length -1)"
+      (click)="restart()"
+      >Rejouer</button>
+  </footer>
+
+</div>
+</div>

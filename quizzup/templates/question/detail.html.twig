@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<h1>Binvenu au QUIZZUP!</h1>
+<div class="container">
+  <a class="btn btn-primary" href="{{path('question_add')}}">Ajouter une question</a>
+
+  <div class="">
+    {% for question in questions %}
+    <h3>{{question.label}}</h3>
+    <a class="btn btn-sm btn-success"href="{{path('question_detail')}}">Voir la réponse</a>
+
+    <a class="btn btn-danger btn-sm"href="{{path('question_delete',{'id':question.id})}}">Supprimer</a>
+    <td><a href="{{path('question_edit', {'id': question.id})}}"class="btn btn-sm btn-warning">Editer</a></td>
+
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}

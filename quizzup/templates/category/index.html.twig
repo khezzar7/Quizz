@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<a class="btn btn-primary" href="{{path('category_add')}}">Ajouter une question</a>
+
+{% for category in categories %}
+<article class="">
+  <p>{{category.name}}</p>
+  <a class="btn btn-danger btn-sm" href="{{path('category_delete',{'id':category.id})}}">Supprimer</a>
+  <a href="{{path('category_edit', {'id': category.id})}}"class="btn btn-sm btn-warning">Editer</a>
+</article>
+{% endfor %}
+{% endblock %}
