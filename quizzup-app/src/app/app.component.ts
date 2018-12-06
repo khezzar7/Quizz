@@ -71,22 +71,25 @@ export class AppComponent {
           //Aucune réponse treouvées par le server en rapport avec les filtres
           this.noResult=true;
         }else{
+          console.log(res.result);
           this.noResult= false;
           let questions =[];
           for( let k in res.result){
         let question = {
-          'id': k,
+          'id': res.result[k].questions.id,
           'label': res.result[k].questions.label,
           'answers' : res.result[k].answers
         };
         questions.push(question);
       }//fin de for
+
       this.appear='none';
       this.questions = questions;
       this.isQuizzupRunning = true;
-      this.clientChoice.question_id= this.questions[this.questionIndex].id;
+      this.clientChoice.question_id= this.questions[this.questionIndex].id
     });
-  }
+
+}
 
   validQuestion(){
     this.isClientChoiceSent= true;
@@ -94,7 +97,7 @@ export class AppComponent {
     let url='http://localhost:8000/question/client/check';
 
     this.http.post(url, this.clientChoice).subscribe((res:ResponseToClientChoice)=>{
-      console.log(res);
+      console.log(this.clientChoice);
       if(res.success){
 
         //le client a fourni la/les bonne(s) réponse(s)

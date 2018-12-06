@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+
 
 
 class CategoryController extends AbstractController
@@ -31,7 +34,9 @@ class CategoryController extends AbstractController
       ->getRepository(Category::class)
       //->findAll()
       ->findAllAssoc();
-      return new Response(json_encode($categories));
+      return new jsonResponse($categories);
+      //json-encode lde corps de la requête mais n'ajoute aucun header supplémentaire indiquant au client quil s'agit de json_decode
+      //
     }
 
     /**

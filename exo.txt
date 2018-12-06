@@ -1,0 +1,15 @@
+*** Quizzup, exo Score***
+**Côté client**
+Ajouter un champ permettant de saisir le nom de l'utilisateur avant le démarrage du Quizz
+
+A l'étape finale (quizzup terminé), envoyer une requête au serveur afin d'enregistrer les infos suivantes:
+
+-nom de l'utilisateur
+-date et heure
+-score(pourcentage de réussite)
+
+**Côté serveur**
+-entité score
+-une route POST /score/add: enregistrer un score en db
+-une route GET /score: affiche un tableau de scores
+tiré du meilleur au  moins bon

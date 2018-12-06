@@ -65,6 +65,8 @@ class QuestionRepository extends ServiceEntityRepository
          $sql.= ' AND question.difficulty = :difficulty';
          $bindings[':difficulty']=$difficulty;
        }
+       //ordre de reponse dans un ordre aléatoire aléatoire
+       $sql.= ' ORDER BY RAND()';
          $query = $connection->prepare($sql);
          $query->execute($bindings);
          $answers= $query->fetchAll();
@@ -94,6 +96,8 @@ class QuestionRepository extends ServiceEntityRepository
        }
        //chaque libellé de question est devenu un indice du nouveau tableau questions
        // a cette clé est associée un tableau de réponses
+       // on mélange l'odre des questions de maniere aléatoire
+       shuffle($questions);
        return $questions;
     }
 
