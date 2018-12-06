@@ -2,6 +2,7 @@
 
 
 <h1>{{title}}</h1>
+
 <div [ngStyle]="{'display':appear}">
   <select [(ngModel)]="category">
     <option value="0">Choisir une catégorie</option>
@@ -18,7 +19,12 @@
     <option value="4">Pro</option>
 
   </select>
-  <button (click)="runQuizzup()" >Démarrer Quizzup</button>
+
+  <input [(ngModel)]="name" type="text" placeholder="Votre nom">
+
+  <button
+   (click)="runQuizzup()"
+   >Démarrer Quizzup</button>
 </div>
 <span
 class="text-danger"

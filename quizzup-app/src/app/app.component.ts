@@ -7,6 +7,7 @@ interface Category{
 interface ResponseQuizz{
   result:any;
 }
+
 interface ResponseToClientChoice{
   success:boolean;
   answers:any[];
@@ -42,6 +43,8 @@ export class AppComponent {
   feedbackColor: string;
   goodAnswers = [];
   resultat=0;
+  name:string;
+
 
   constructor(private http: HttpClient){
   //this.url='https://yesno.wtf/api';
@@ -53,6 +56,7 @@ export class AppComponent {
 
   }
   runQuizzup(){
+
     //charger une collection de question/réponses
     //on doit interroger une route(endpoint) en Ajax founissant des données
     //console.log(this.category);
@@ -92,6 +96,7 @@ export class AppComponent {
 }
 
   validQuestion(){
+
     this.isClientChoiceSent= true;
     //requete au serveur pour verification du choix client
     let url='http://localhost:8000/question/client/check';
@@ -113,8 +118,31 @@ export class AppComponent {
       }
       this.isServerResponseReceived=true;
         this.goodAnswers = res.answers;
+        console.log(this.goodAnswers);
+
+        //si fin  de quizz, envoie au serveur du name/score pour enregistrement
+        if(this.questionIndex  === this.questions.length -1){
+
+
+
+        this.sendResult();
+        }
 
     })
+  }
+
+  sendResult(){
+    let score = this.score/ this.questions.length * 100;
+    let result={
+
+      name: this.name,
+      score : score
+    }
+    let url="http://localhost:8000/result";
+    this.http.post(url, result)
+    .subscribe(res=>{
+      console.log(res);
+    });
   }
 
   checkAnswer(question_id:number, answer_id:number){
@@ -157,6 +185,7 @@ export class AppComponent {
     this.isServerResponseReceived=false;
     this.clientChoice.answers=[];
     this.goodAnswers=[];
+    this.name="";
   }
 
   isCorrect(id:number):boolean{
@@ -172,6 +201,10 @@ export class AppComponent {
     }else{
      return false;
     }
+
+  }
+
+  endQuizzup(){
 
   }
 

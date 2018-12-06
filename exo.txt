@@ -10,6 +10,6 @@ A l'étape finale (quizzup terminé), envoyer une requête au serveur afin d'enr
 
 **Côté serveur**
 -entité score
--une route POST /score/add: enregistrer un score en db
+-une route POST /score: enregistrer un score en db
 -une route GET /score: affiche un tableau de scores
 tiré du meilleur au  moins bon
